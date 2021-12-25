@@ -5,12 +5,12 @@ import { PostService } from './post.service';
 export class PostController {
   constructor(private readonly appService: PostService) {}
 
-  @Get()
+  @Get('get')
   getPosts(): string {
     return this.appService.getPosts();
   }
 
-  @Post()
+  @Post('post')
   createPost(): string {
     return this.appService.createPost();
   }
