@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { PostService } from './post.service';
+import { PostService } from '../service/post.service';
 
 type User = {
   id: number;

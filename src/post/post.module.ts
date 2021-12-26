@@ -1,20 +1,8 @@
-import { Module, Post } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { PostController } from './post.controller';
-import { PostService } from './post.service';
+import { Module } from '@nestjs/common';
+import { PostController } from './controller/post.controller';
+import { PostService } from './service/post.service';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      url: process.env.DATABASE_URL,
-      type: 'postgres',
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      autoLoadEntities: true,
-    }),
-    TypeOrmModule.forFeature([Post]),
-  ],
   controllers: [PostController],
   providers: [PostService],
 })
