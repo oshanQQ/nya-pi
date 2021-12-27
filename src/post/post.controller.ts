@@ -1,22 +1,18 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { PostService } from '../service/post.service';
-
-type User = {
-  id: number;
-  text: string;
-};
+import { CreatePostDto } from './dto/create-post.dto';
+import { PostService } from './post.service';
 
 @Controller('posts')
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
-  @Get('get')
+  @Get()
   getPosts() {
     return this.postService.getPosts();
   }
 
-  @Post('post')
-  createPost(@Body() user: User) {
-    return this.postService.createPost(user);
+  @Post()
+  createPost(@Body() createPost: CreatePostDto) {
+    return this.postService.createPost(createPost);
   }
 }
