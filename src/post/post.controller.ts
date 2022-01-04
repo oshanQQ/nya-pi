@@ -1,18 +1,26 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostService } from './post.service';
 
 @Controller('posts')
+@UsePipes(new ValidationPipe({ transform: true }))
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Get()
   getPosts() {
-    return this.postService.getPosts();
+    return this.postService.findAll();
   }
 
   @Post()
-  createPost(@Body() createPost: CreatePostDto) {
-    return this.postService.createPost(createPost);
+  addPost(@Body() createPostDto: CreatePostDto) {
+    return this.postService.addPost(createPostDto.text);
   }
 }

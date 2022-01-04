@@ -1,3 +1,6 @@
+import { IsString } from 'class-validator';
+
 export class CreatePostDto {
-  readonly text: string;
+  @IsString()
+  text: string;
 }

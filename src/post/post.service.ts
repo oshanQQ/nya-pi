@@ -1,29 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePostDto } from './dto/create-post.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Post } from '../entity/post.entity';
 
 @Injectable()
 export class PostService {
-  posts: CreatePostDto[] = [];
+  constructor(
+    @InjectRepository(Post)
+    private readonly postsRepository: Repository<Post>,
+  ) {}
 
-  createPost(post: CreatePostDto) {
-    this.posts.push(post);
+  addPost(text: string) {
+    const newPost = new Post();
+    newPost.text = text;
+    this.postsRepository.insert(newPost);
   }
 
-  getPosts() {
-    return this.posts;
+  findAll(): Promise<Post[]> {
+    return this.postsRepository.find();
   }
-
-  // constructor(
-  //   @InjectRepository(Post)
-  //   private postsRepository: Repository<Post>,
-  // ) {}
-
-  // getPosts(): Promise<Post[]> {
-  //   return this.postsRepository.find();
-  // }
-
-  // createPost(post): Promise<Post> {
-  //   this.postsRepository.insert(post);
-  //   return post;
-  // }
 }
